@@ -3,6 +3,13 @@ select *from empresa e ;
 
 select *from trabajadores t;
 
+-- Creando una tabla temporal
+drop table if exists prueba;
+select  trabajadores.nombre, trabajadores.sueldodevengado, empresa.nombreempresa into
+prueba from trabajadores inner join empresa on trabajadores.empresa = empresa.idempresa;
+
+select *from prueba;
+
 -- Modificando el tipo de dato de la columna sueldodevengado
 alter table trabajadores alter column sueldodevengado set data type FLOAT;
 
@@ -42,7 +49,7 @@ begin
 end;
 $$ language plpgsql;
 
-select registros_tipo_empresa('nanciero');
+select registros_tipo_empresa('Tec');
 
 create or replace function trae_ocupaciones (ocupacion VARCHAR(30))
 returns table (nombre VARCHAR(30), cargo VARCHAR(30), nombreempresa VARCHAR(30), sueldodevengado FLOAT)
@@ -55,3 +62,10 @@ end;
 $$ language plpgsql;
 
 select trae_ocupaciones ('ingeniero');
+
+-- Creación de vistas
+drop view if exists Filtros;
+create view Filtros as select *from trabajadores where 
+modalidadtrabajo = 'Remoto' and ciudad = 'Bogota D.C';
+
+select * from Filtros;
