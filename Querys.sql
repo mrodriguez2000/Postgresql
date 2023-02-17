@@ -45,7 +45,7 @@ begin
 	return query
 	select t.nombre, t.cargo, t.sueldodevengado, e.nombreempresa, e.categoriaempresa from trabajadores t 
 	inner join empresa e on t.empresa = e.idempresa and e.categoriaempresa 
-	like CONCAT('%', tipo_empresa, '%');
+	ilike '%' || tipo_empresa || '%';
 end;
 $$ language plpgsql;
 
@@ -57,7 +57,7 @@ as $$
 begin
 	return query
 	select t.nombre, t.cargo, e.nombreempresa, t.sueldodevengado from trabajadores t inner join
-	empresa e on t.empresa = e.idempresa;
+	empresa e on t.empresa = e.idempresa and t.cargo ilike '%' || ocupacion || '%';
 end;
 $$ language plpgsql;
 
