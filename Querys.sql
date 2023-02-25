@@ -1,7 +1,10 @@
 -- Consultas básicas a las tablas
 select *from empresa e ;
 
-select *from trabajadores t;
+select *from trabajadores t ;
+
+select trabajadores.nombre, ciudades.nombreciudad, empresa.nombreempresa from trabajadores inner join empresa on trabajadores.empresa = empresa.idempresa 
+inner join ciudades on trabajadores.ciudad = ciudades.idciudad;
 
 -- Creando una tabla temporal
 drop table if exists prueba;
@@ -69,3 +72,9 @@ create view Filtros as select *from trabajadores where
 modalidadtrabajo = 'Remoto' and ciudad = 'Bogota D.C';
 
 select * from Filtros;
+
+create table respaldo(
+	idtrabajador int,
+	nombre varchar(30),
+	cargo varchar(30),
+);
